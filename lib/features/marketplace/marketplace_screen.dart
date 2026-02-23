@@ -151,7 +151,17 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                child: Image.network(product.imageUrl, height: 120, width: double.infinity, fit: BoxFit.cover),
+                child: Image.network(
+                  product.imageUrl,
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    height: 120,
+                    color: Colors.grey.shade100,
+                    child: const Icon(Icons.image_not_supported, color: Colors.grey),
+                  ),
+                ),
               ),
               Positioned(
                 top: 8,

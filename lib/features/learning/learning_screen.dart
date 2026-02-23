@@ -138,7 +138,17 @@ class _LearningScreenState extends State<LearningScreen> {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                child: Image.network(course.thumbnailUrl, height: 180, width: double.infinity, fit: BoxFit.cover),
+                child: Image.network(
+                  course.thumbnailUrl,
+                  height: 180,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    height: 180,
+                    color: Colors.grey.shade100,
+                    child: const Icon(Icons.school, color: Colors.grey, size: 48),
+                  ),
+                ),
               ),
               CircleAvatar(
                 radius: 30,
@@ -221,7 +231,17 @@ class _LearningScreenState extends State<LearningScreen> {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                child: Image.network(course.thumbnailUrl, height: 150, width: double.infinity, fit: BoxFit.cover),
+                child: Image.network(
+                  course.thumbnailUrl,
+                  height: 150,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    height: 150,
+                    color: Colors.grey.shade100,
+                    child: const Icon(Icons.play_lesson, color: Colors.grey, size: 32),
+                  ),
+                ),
               ),
               if (course.isCompleted)
                 Positioned(

@@ -9,14 +9,26 @@ import '../../features/marketplace/marketplace_screen.dart';
 import '../../features/learning/learning_screen.dart';
 import '../../features/scan/scan_screen.dart';
 
+import '../../features/onboarding/splash_screen.dart';
+import '../../features/onboarding/onboarding_screen.dart';
+import '../../shared/widgets/modern_navigation_bar.dart';
+
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/',
+    initialLocation: '/splash',
     routes: [
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginScreen(),
@@ -61,12 +73,14 @@ class MainScreen extends StatelessWidget {
       if (location.startsWith('/marketplace')) return 1;
       if (location.startsWith('/scan')) return 2; // Central action
       if (location.startsWith('/learning')) return 3;
+      if (location.startsWith('/profile')) return 4;
       return 0; // Home
     }
 
     return Scaffold(
+      extendBody: true,
       body: child,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: ModernNavigationBar(
         selectedIndex: getCurrentIndex(),
         onDestinationSelected: (index) {
           switch (index) {
@@ -74,14 +88,9 @@ class MainScreen extends StatelessWidget {
             case 1: context.go('/marketplace'); break;
             case 2: context.go('/scan'); break;
             case 3: context.go('/learning'); break;
+            case 4: /* context.go('/profile'); */ break;
           }
         },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.shopping_bag_outlined), selectedIcon: Icon(Icons.shopping_bag), label: 'Market'),
-          NavigationDestination(icon: Icon(Icons.qr_code_scanner), selectedIcon: Icon(Icons.qr_code_scanner), label: 'Scan'),
-          NavigationDestination(icon: Icon(Icons.school_outlined), selectedIcon: Icon(Icons.school), label: 'Learning'),
-        ],
       ),
     );
   }

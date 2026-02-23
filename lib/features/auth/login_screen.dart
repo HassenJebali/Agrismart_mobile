@@ -110,6 +110,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     TextButton(onPressed: () {}, child: const Text('Register')),
                   ],
                 ),
+                const SizedBox(height: 24),
+                const Divider(),
+                const SizedBox(height: 12),
+                Center(
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      context.go('/');
+                    },
+                    icon: const Icon(Icons.vignette_rounded),
+                    label: const Text('MODE DÉMO : ACCÈS RAPIDE'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.orange.shade800,
+                      side: BorderSide(color: Colors.orange.shade800),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

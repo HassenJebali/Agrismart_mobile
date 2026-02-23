@@ -103,9 +103,15 @@ class DashboardScreen extends StatelessWidget {
   Widget _buildHeader() {
     return Row(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 24,
-          backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=farmer'),
+          backgroundColor: AppColors.primaryLight,
+          child: ClipOval(
+            child: Image.network(
+              'https://i.pravatar.cc/150?u=farmer',
+              errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, color: AppColors.primary),
+            ),
+          ),
         ),
         const SizedBox(width: 12),
         const Expanded(
