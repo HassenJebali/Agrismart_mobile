@@ -1,13 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ApiClient {
   final Dio _dio;
 
   ApiClient(this._dio) {
-    _dio.options.baseUrl = 'https://api.agrismart.mock/v1'; // Mock API Base URL
+    _dio.options.baseUrl = const String.fromEnvironment(
+      'API_BASE_URL',
+      defaultValue: 'http://localhost:8080/api',
+    );
     _dio.options.connectTimeout = const Duration(seconds: 15);
     _dio.options.receiveTimeout = const Duration(seconds: 15);
+    _dio.options.headers['Content-Type'] = 'application/json';
 
     _dio.interceptors.add(
       InterceptorsWrapper(
@@ -38,6 +42,14 @@ class ApiClient {
 
   Future<Response> delete(String path) async {
     return await _dio.delete(path);
+  }
+
+  void setAuthToken(String? token) {
+    if (token == null || token.isEmpty) {
+      _dio.options.headers.remove('Authorization');
+      return;
+    }
+    _dio.options.headers['Authorization'] = 'Bearer $token';
   }
 }
 

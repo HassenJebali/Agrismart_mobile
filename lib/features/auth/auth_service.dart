@@ -1,45 +1,82 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dio/dio.dart';
+import '../../core/network/api_client.dart';
 import '../../core/storage/storage_service.dart';
 import 'user_model.dart';
 import 'dart:convert';
 
 class AuthService {
   final StorageService _storage;
+  final ApiClient _apiClient;
 
-  AuthService(this._storage);
+  AuthService(this._storage, this._apiClient) {
+    final currentUser = getCurrentUser();
+    _apiClient.setAuthToken(currentUser?.token);
+  }
 
   static const String _userKey = 'auth_user';
 
   Future<User?> login(String email, String password) async {
-    // Simulate API delay
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (email == 'farmer@smart.com' && password == 'password') {
-      final user = User(
-        id: '1',
-        name: 'Marcus Farmer',
-        email: email,
-        token: 'mock_token_123',
-        phone: '+216 12 345 678',
-        location: 'Bizerte, Tunisia',
-        cropType: 'Cereals & Vegetables',
+    try {
+      final response = await _apiClient.post(
+        '/auth/login',
+        data: {
+          'email': email.trim(),
+          'password': password,
+        },
       );
+
+      final user = _mapAuthResponseToUser(response.data);
       await saveUser(user);
+      _apiClient.setAuthToken(user.token);
       return user;
+    } on DioException {
+      return null;
     }
-    return null;
   }
 
-  Future<User?> register(String name, String email, String password) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final user = User(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      name: name,
+  Future<User?> register(
+    String name,
+    String email,
+    String password, {
+    String lastName = '',
+    String role = 'FARMER',
+    String organization = '',
+  }) async {
+    try {
+      final response = await _apiClient.post(
+        '/auth/register',
+        data: {
+          'email': email.trim(),
+          'password': password,
+          'firstName': name.trim(),
+          'lastName': lastName.trim(),
+          'role': role,
+          'organization': organization,
+        },
+      );
+
+      final user = _mapAuthResponseToUser(response.data);
+      await saveUser(user);
+      _apiClient.setAuthToken(user.token);
+      return user;
+    } on DioException {
+      return null;
+    }
+  }
+
+  User _mapAuthResponseToUser(dynamic data) {
+    final json = Map<String, dynamic>.from(data as Map);
+    final email = (json['email'] ?? '').toString();
+    final firstName = (json['firstName'] ?? '').toString().trim();
+    final lastName = (json['lastName'] ?? '').toString().trim();
+
+    return User(
+      id: email,
+      name: [firstName, lastName].where((part) => part.isNotEmpty).join(' ').trim(),
       email: email,
-      token: 'mock_token_new',
+      token: (json['token'] ?? '').toString(),
     );
-    await saveUser(user);
-    return user;
   }
 
   Future<void> saveUser(User user) async {
@@ -55,13 +92,15 @@ class AuthService {
   }
 
   Future<void> logout() async {
+    _apiClient.setAuthToken(null);
     await _storage.remove(_userKey);
   }
 }
 
 final authServiceProvider = Provider<AuthService>((ref) {
   final storage = ref.watch(storageServiceProvider);
-  return AuthService(storage);
+  final apiClient = ref.watch(apiClientProvider);
+  return AuthService(storage, apiClient);
 });
 
 final authStateProvider = StateProvider<User?>((ref) {
