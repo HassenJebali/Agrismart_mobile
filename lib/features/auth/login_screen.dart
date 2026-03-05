@@ -35,7 +35,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         context.go('/');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid credentials (try farmer@smart.com / password)')),
+          const SnackBar(content: Text('Login failed. Please check your email and password.')),
         );
       }
     }
@@ -57,7 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Center(
                   child: Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.primaryLight,
                       shape: BoxShape.circle,
                     ),
