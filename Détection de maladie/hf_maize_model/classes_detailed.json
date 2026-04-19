@@ -1,0 +1,76 @@
+{
+  "classes": {
+    "Healthy": 0,
+    "Gray_Leaf_Spot": 1,
+    "Blight": 2,
+    "Common_Rust": 3
+  },
+  "details": {
+    "Healthy": {
+      "description": "Plants show no signs of disease.",
+      "characteristics": [
+        "Vibrant green color",
+        "Uniform leaf structure",
+        "No spots or lesions",
+        "Normal growth and development"
+      ],
+      "importance": "Represents the ideal state of the crop, with maximum yield potential."
+    },
+    "Gray_Leaf_Spot": {
+      "causative_agent": "Cercospora zeae-maydis, C. sorghi var. maydis",
+      "symptoms": [
+        "Small, regular, elongated brown-gray necrotic spots growing parallel to the veins",
+        "Lesions may reach 3.0 x 0.3 cm",
+        "Lesions may coalesce, producing a complete burning of large areas of the leaves"
+      ],
+      "environmental_conditions": [
+        "Prevalent in subtropical and temperate, humid areas",
+        "Favored by extended periods of leaf wetness and cloudy conditions"
+      ],
+      "impact": "Can result in severe leaf senescence following flowering and poor grain fill",
+      "notes": [
+        "Also known as cercospora leaf spot",
+        "Minimum tillage practices have been associated with increased incidence"
+      ]
+    },
+    "Blight": {
+      "note": "This typically refers to Northern Corn Leaf Blight, but could include other types of blight",
+      "causative_agent": "Setosphaeria turcica (Teleomorph), Exserohilum turcicum (Anamorph)",
+      "symptoms": [
+        "Small, oval, water-soaked spots on leaves",
+        "Spots grow into elongated, spindle-shaped necrotic lesions",
+        "Lesions may appear first on lower leaves and increase in number as the plant develops",
+        "Can lead to complete burning of the foliage"
+      ],
+      "environmental_conditions": [
+        "Occurs worldwide, particularly in areas with high humidity and moderate temperatures",
+        "Prevalent during the growing season"
+      ],
+      "impact": "When infection occurs prior to and at silking and conditions are optimum, it may cause significant economic damage"
+    },
+    "Common_Rust": {
+      "causative_agent": "Puccinia sorghi",
+      "symptoms": [
+        "Small, elongate, powdery pustules over both surfaces of the leaves",
+        "Pustules are dark brown in early stages of infection",
+        "Later, the epidermis is ruptured and the lesions turn black as the plant matures"
+      ],
+      "environmental_conditions": [
+        "Found worldwide in subtropical, temperate, and highland environments with high humidity"
+      ],
+      "impact": "Can reduce yield, especially if infection is severe before or during tasseling",
+      "notes": [
+        "Most conspicuous when plants approach tasseling",
+        "Alternate host (Oxalis spp.) may show light orange colored pustules"
+      ]
+    }
+  },
+  "general_notes": [
+    "Early detection and proper identification of these diseases are crucial for effective management.",
+    "Integrated pest management strategies, including resistant varieties, crop rotation, and timely fungicide applications, can help control these diseases.",
+    "Climate conditions, particularly humidity and temperature, play a significant role in the development and spread of these diseases.",
+    "Many diseases can have similar symptoms, so careful observation and sometimes laboratory analysis may be necessary for accurate diagnosis.",
+    "The severity of disease impact often depends on the timing of infection relative to the plant's growth stage.",
+    "Some pathogens can infect multiple parts of the plant, including leaves, stalks, and ears."
+  ]
+}
